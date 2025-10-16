@@ -1,6 +1,9 @@
 # ---- Base image ----
 FROM python:3.11-slim
 
+# ---- Install SQLite CLI ----
+RUN apt-get update && apt-get install -y sqlite3 && rm -rf /var/lib/apt/lists/*
+
 # ---- Set working directory ----
 WORKDIR /app
 
@@ -14,5 +17,5 @@ COPY . .
 # ---- Expose port ----
 EXPOSE 5000
 
-# ---- Run the Flask app with app factory ----
-CMD ["python", "run.py"]
+# ---- Run the Flask app ----
+CMD ["python", "run.py", "--host=0.0.0.0", "--port=5000"]

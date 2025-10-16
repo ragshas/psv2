@@ -1,0 +1,542 @@
+{% extends "base.html" %}
+
+{% block title %}Home - PSv2 Pet Grooming & Shop{% endblock %}
+
+{% block content %}
+<!-- Hero Section -->
+<section class="hero">
+    <div class="hero-content">
+        <h1 class="hero-title">Your Pet's Second Home 🐾</h1>
+        <p class="hero-subtitle">Grooming • Boarding • Pet Food • Accessories</p>
+        <p class="hero-description">Professional pet care services with love and attention your furry friends deserve</p>
+        <div class="cta-buttons">
+            <a href="/services" class="btn-primary">Book Grooming</a>
+            <a href="/shop" class="btn-secondary">Visit Shop</a>
+        </div>
+    </div>
+    <div class="hero-visual">
+        <div class="hero-image">
+            <span class="hero-emoji">🐕</span>
+            <span class="hero-emoji">🐱</span>
+            <span class="hero-emoji">🐾</span>
+        </div>
+    </div>
+</section>
+
+<!-- Services Section -->
+<section class="services">
+    <div class="section-header">
+        <h2 class="section-title">Our Services</h2>
+        <p class="section-subtitle">Everything your pet needs under one roof</p>
+    </div>
+    <div class="services-grid">
+        <div class="service-card">
+            <div class="service-icon">✂️</div>
+            <h3 class="service-title">Professional Grooming</h3>
+            <p class="service-description">Full-service grooming including baths, cuts, nail trimming, and styling to keep your pet looking and feeling their best.</p>
+        </div>
+        <div class="service-card">
+            <div class="service-icon">🏠</div>
+            <h3 class="service-title">Pet Hostel</h3>
+            <p class="service-description">Safe, comfortable boarding with 24/7 care. Your pets will enjoy spacious rooms, playtime, and lots of attention.</p>
+        </div>
+        <div class="service-card">
+            <div class="service-icon">🍖</div>
+            <h3 class="service-title">Premium Pet Food</h3>
+            <p class="service-description">High-quality nutrition from trusted brands. Specialized diets for puppies, seniors, and pets with special dietary needs.</p>
+        </div>
+        <div class="service-card">
+            <div class="service-icon">🎾</div>
+            <h3 class="service-title">Pet Accessories</h3>
+            <p class="service-description">Complete range of toys, collars, beds, carriers, and accessories to keep your pet happy, safe, and stylish.</p>
+        </div>
+    </div>
+</section>
+
+<!-- About Us Section -->
+<section class="about">
+    <div class="about-content">
+        <div class="about-text">
+            <h2 class="about-title">About Pet Grooming & Shop</h2>
+            <p class="about-description">
+                At Pet Grooming & Shop, we treat your pets like family. We offer professional grooming services, 
+                a cozy pet hostel for when you're away, and a wide range of premium pet products to keep your 
+                furry friends healthy and happy.
+            </p>
+            <p class="about-description">
+                Our experienced team is passionate about animal care and dedicated to providing the highest 
+                quality service. From routine grooming to specialized care, we ensure every pet receives 
+                the love and attention they deserve.
+            </p>
+            <div class="about-features">
+                <div class="feature">
+                    <span class="feature-icon">✅</span>
+                    <span class="feature-text">Certified professionals</span>
+                </div>
+                <div class="feature">
+                    <span class="feature-icon">✅</span>
+                    <span class="feature-text">Safe & clean environment</span>
+                </div>
+                <div class="feature">
+                    <span class="feature-icon">✅</span>
+                    <span class="feature-text">Premium products only</span>
+                </div>
+            </div>
+        </div>
+        <div class="about-visual">
+            <div class="about-image">
+                <div class="image-placeholder">
+                    <span class="placeholder-icon">🐕‍🦺</span>
+                    <p class="placeholder-text">Happy Pets</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Highlights Section -->
+<section class="highlights">
+    <div class="section-header">
+        <h2 class="section-title">Why Choose Us</h2>
+        <p class="section-subtitle">Trusted by pet owners across the community</p>
+    </div>
+    <div class="highlights-grid">
+        <div class="highlight-card">
+            <div class="highlight-number">500+</div>
+            <div class="highlight-label">Happy Pets</div>
+        </div>
+        <div class="highlight-card">
+            <div class="highlight-number">5★</div>
+            <div class="highlight-label">Average Rating</div>
+        </div>
+        <div class="highlight-card">
+            <div class="highlight-number">24/7</div>
+            <div class="highlight-label">Care Available</div>
+        </div>
+        <div class="highlight-card">
+            <div class="highlight-number">3+</div>
+            <div class="highlight-label">Years Experience</div>
+        </div>
+    </div>
+</section>
+
+<style>
+/* Hero Section */
+.hero {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 60px;
+    align-items: center;
+    padding: 80px 0;
+    min-height: 600px;
+}
+
+.hero-content {
+    animation: fadeInLeft 0.8s ease-out;
+}
+
+.hero-title {
+    font-size: clamp(36px, 5vw, 56px);
+    font-weight: 800;
+    color: var(--text-primary);
+    margin-bottom: 16px;
+    line-height: 1.1;
+    letter-spacing: -0.02em;
+}
+
+.hero-subtitle {
+    font-size: 20px;
+    color: var(--accent);
+    font-weight: 600;
+    margin-bottom: 16px;
+}
+
+.hero-description {
+    font-size: 18px;
+    color: var(--text-secondary);
+    margin-bottom: 32px;
+    line-height: 1.6;
+}
+
+.cta-buttons {
+    display: flex;
+    gap: 16px;
+    flex-wrap: wrap;
+}
+
+.btn-primary, .btn-secondary {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 16px 32px;
+    border-radius: 12px;
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 16px;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    min-width: 160px;
+    justify-content: center;
+}
+
+.btn-primary {
+    background: linear-gradient(135deg, var(--accent), var(--accent-hover));
+    color: white;
+    box-shadow: 0 8px 24px rgba(59, 130, 246, 0.3);
+}
+
+.btn-primary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 12px 32px rgba(59, 130, 246, 0.4);
+}
+
+.btn-secondary {
+    background: transparent;
+    color: var(--text-primary);
+    border: 2px solid var(--border);
+}
+
+.btn-secondary:hover {
+    background: rgba(59, 130, 246, 0.1);
+    border-color: var(--accent);
+    transform: translateY(-2px);
+}
+
+.hero-visual {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    animation: fadeInRight 0.8s ease-out;
+}
+
+.hero-image {
+    width: 300px;
+    height: 300px;
+    background: linear-gradient(135deg, rgba(59, 130, 246, 0.1), rgba(59, 130, 246, 0.05));
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    border: 2px solid rgba(59, 130, 246, 0.2);
+}
+
+.hero-emoji {
+    font-size: 48px;
+    position: absolute;
+    animation: float 3s ease-in-out infinite;
+}
+
+.hero-emoji:nth-child(1) {
+    top: 20%;
+    left: 25%;
+    animation-delay: 0s;
+}
+
+.hero-emoji:nth-child(2) {
+    top: 25%;
+    right: 20%;
+    animation-delay: 1s;
+}
+
+.hero-emoji:nth-child(3) {
+    bottom: 30%;
+    left: 50%;
+    transform: translateX(-50%);
+    animation-delay: 2s;
+}
+
+@keyframes float {
+    0%, 100% { transform: translateY(0px); }
+    50% { transform: translateY(-10px); }
+}
+
+@keyframes fadeInLeft {
+    from { opacity: 0; transform: translateX(-40px); }
+    to { opacity: 1; transform: translateX(0); }
+}
+
+@keyframes fadeInRight {
+    from { opacity: 0; transform: translateX(40px); }
+    to { opacity: 1; transform: translateX(0); }
+}
+
+/* Services Section */
+.services {
+    padding: 80px 0;
+    background: linear-gradient(135deg, rgba(30, 41, 59, 0.3), rgba(30, 41, 59, 0.1));
+    border-radius: 24px;
+    margin: 40px 0;
+}
+
+.section-header {
+    text-align: center;
+    margin-bottom: 60px;
+}
+
+.section-title {
+    font-size: clamp(32px, 4vw, 48px);
+    font-weight: 700;
+    color: var(--text-primary);
+    margin-bottom: 16px;
+}
+
+.section-subtitle {
+    font-size: 18px;
+    color: var(--text-secondary);
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+.services-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 32px;
+}
+
+.service-card {
+    background: linear-gradient(135deg, rgba(59, 130, 246, 0.05), rgba(59, 130, 246, 0.02));
+    border: 1px solid rgba(59, 130, 246, 0.1);
+    border-radius: 16px;
+    padding: 32px 24px;
+    text-align: center;
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    position: relative;
+    overflow: hidden;
+}
+
+.service-card:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+    border-color: rgba(59, 130, 246, 0.3);
+}
+
+.service-icon {
+    font-size: 48px;
+    margin-bottom: 20px;
+    display: block;
+}
+
+.service-title {
+    font-size: 20px;
+    font-weight: 600;
+    color: var(--text-primary);
+    margin-bottom: 12px;
+}
+
+.service-description {
+    color: var(--text-secondary);
+    line-height: 1.6;
+    font-size: 14px;
+}
+
+/* About Section */
+.about {
+    padding: 80px 0;
+}
+
+.about-content {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 60px;
+    align-items: center;
+}
+
+.about-title {
+    font-size: clamp(28px, 4vw, 40px);
+    font-weight: 700;
+    color: var(--text-primary);
+    margin-bottom: 24px;
+}
+
+.about-description {
+    color: var(--text-secondary);
+    line-height: 1.7;
+    margin-bottom: 20px;
+    font-size: 16px;
+}
+
+.about-features {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    margin-top: 32px;
+}
+
+.feature {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.feature-icon {
+    font-size: 16px;
+    color: #10b981;
+}
+
+.feature-text {
+    color: var(--text-primary);
+    font-weight: 500;
+}
+
+.about-visual {
+    display: flex;
+    justify-content: center;
+}
+
+.about-image {
+    width: 300px;
+    height: 300px;
+    background: linear-gradient(135deg, rgba(59, 130, 246, 0.1), rgba(59, 130, 246, 0.05));
+    border-radius: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    border: 2px solid rgba(59, 130, 246, 0.2);
+}
+
+.image-placeholder {
+    text-align: center;
+}
+
+.placeholder-icon {
+    font-size: 64px;
+    display: block;
+    margin-bottom: 16px;
+}
+
+.placeholder-text {
+    color: var(--text-secondary);
+    font-weight: 600;
+    font-size: 18px;
+}
+
+/* Highlights Section */
+.highlights {
+    padding: 80px 0;
+    background: linear-gradient(135deg, rgba(30, 41, 59, 0.2), rgba(30, 41, 59, 0.05));
+    border-radius: 24px;
+    margin: 40px 0;
+}
+
+.highlights-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 32px;
+}
+
+.highlight-card {
+    text-align: center;
+    padding: 32px 16px;
+}
+
+.highlight-number {
+    font-size: clamp(36px, 5vw, 48px);
+    font-weight: 800;
+    color: var(--accent);
+    margin-bottom: 8px;
+}
+
+.highlight-label {
+    color: var(--text-secondary);
+    font-weight: 500;
+    font-size: 16px;
+}
+
+/* Light Theme Support */
+@media (prefers-color-scheme: light) {
+    .services, .highlights {
+        background: linear-gradient(135deg, rgba(59, 130, 246, 0.05), rgba(59, 130, 246, 0.02));
+    }
+    
+    .service-card, .about-image, .hero-image {
+        background: linear-gradient(135deg, rgba(59, 130, 246, 0.08), rgba(59, 130, 246, 0.03));
+        border-color: rgba(59, 130, 246, 0.15);
+    }
+    
+    .service-card:hover {
+        box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+    }
+}
+
+/* Mobile Responsive */
+@media (max-width: 768px) {
+    .hero {
+        grid-template-columns: 1fr;
+        gap: 40px;
+        padding: 60px 0;
+        text-align: center;
+    }
+    
+    .cta-buttons {
+        justify-content: center;
+    }
+    
+    .btn-primary, .btn-secondary {
+        min-width: 140px;
+        padding: 14px 24px;
+    }
+    
+    .hero-image {
+        width: 250px;
+        height: 250px;
+    }
+    
+    .services {
+        padding: 60px 20px;
+        margin: 20px 0;
+    }
+    
+    .services-grid {
+        gap: 24px;
+    }
+    
+    .service-card {
+        padding: 24px 20px;
+    }
+    
+    .about-content {
+        grid-template-columns: 1fr;
+        gap: 40px;
+        text-align: center;
+    }
+    
+    .about {
+        padding: 60px 0;
+    }
+    
+    .about-image {
+        width: 250px;
+        height: 250px;
+    }
+    
+    .highlights {
+        padding: 60px 20px;
+        margin: 20px 0;
+    }
+    
+    .highlights-grid {
+        gap: 24px;
+    }
+}
+
+@media (max-width: 480px) {
+    .cta-buttons {
+        flex-direction: column;
+        width: 100%;
+    }
+    
+    .btn-primary, .btn-secondary {
+        width: 100%;
+    }
+    
+    .services-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .highlights-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+</style>
+{% endblock %}

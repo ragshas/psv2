@@ -1,0 +1,81 @@
+{% extends "base.html" %}
+
+{% block title %}Analytics & Reports - PS Framework v2 Admin{% endblock %}
+
+{% block extra_css %}
+<style>
+    .page-header {
+        text-align: center;
+        margin-bottom: 40px;
+    }
+    .page-title { 
+        font-size: clamp(32px, 5vw, 48px); 
+        letter-spacing: 0.5px; 
+        margin: 0 0 16px; 
+        color: var(--accent);
+    }
+    .coming-soon-card {
+        background: linear-gradient(180deg, rgba(255,255,255,0.04), rgba(255,255,255,0.02));
+        border: 1px solid var(--border);
+        border-radius: 12px;
+        padding: 48px 32px;
+        text-align: center;
+        box-shadow: 0 10px 30px rgba(0,0,0,0.35);
+        max-width: 600px;
+        margin: 0 auto;
+    }
+    .coming-soon-card h2 {
+        font-size: 24px;
+        color: var(--text);
+        margin: 0 0 16px;
+    }
+    .coming-soon-card p {
+        font-size: 18px;
+        color: var(--muted);
+        margin: 0 0 24px;
+        line-height: 1.6;
+    }
+    .feature-list {
+        text-align: left;
+        margin: 24px 0;
+        padding: 0;
+        list-style: none;
+    }
+    .feature-list li {
+        padding: 8px 0;
+        color: var(--muted);
+    }
+    .feature-list li:before {
+        content: "📊 ";
+        margin-right: 8px;
+    }
+    @media (prefers-color-scheme: light) {
+        .coming-soon-card { 
+            background: #fff; 
+            box-shadow: 0 10px 24px rgba(2,6,23,0.06); 
+        }
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="page-header">
+    <h1 class="page-title">Analytics & Reports</h1>
+</div>
+
+<div class="coming-soon-card">
+    <h2>Analytics & Reporting Dashboard</h2>
+    <p>The analytics and reporting system is currently under development. This section will provide comprehensive insights and data visualization for your business.</p>
+    
+    <ul class="feature-list">
+        <li>Business performance metrics</li>
+        <li>Customer behavior analytics</li>
+        <li>Revenue and sales reporting</li>
+        <li>Service popularity insights</li>
+        <li>Interactive charts and graphs</li>
+        <li>Export reports to PDF/Excel</li>
+    </ul>
+    
+    <p><strong>Coming soon!</strong> Check back for powerful analytics and reporting tools to help grow your business.</p>
+</div>
+{% endblock %}

@@ -1,0 +1,333 @@
+<!-- Flash Messages Template - Modern Toast Style -->
+{% with messages = get_flashed_messages(with_categories=true) %}
+    {% if messages %}
+        <div class="flash-container" id="flashContainer">
+            {% for category, message in messages %}
+                <div class="flash-toast flash-{{ category }}" data-flash-toast>
+                    <div class="flash-icon">
+                        {% if category == 'success' %}
+                            <span class="icon">✅</span>
+                        {% elif category == 'error' %}
+                            <span class="icon">⚠️</span>
+                        {% elif category == 'info' %}
+                            <span class="icon">ℹ️</span>
+                        {% else %}
+                            <span class="icon">💬</span>
+                        {% endif %}
+                    </div>
+                    <div class="flash-content">
+                        <span class="flash-message">{{ message }}</span>
+                    </div>
+                    <button class="flash-close" onclick="dismissToast(this)" aria-label="Close notification">
+                        <span>&times;</span>
+                    </button>
+                    <div class="flash-progress"></div>
+                </div>
+            {% endfor %}
+        </div>
+
+        <style>
+            /* Flash Toast Container */
+            .flash-container {
+                position: fixed;
+                top: 20px;
+                right: 20px;
+                z-index: 9999;
+                max-width: 420px;
+                width: 100%;
+                pointer-events: none;
+            }
+
+            /* Toast Base Styles */
+            .flash-toast {
+                display: flex;
+                align-items: flex-start;
+                gap: 12px;
+                padding: 16px 20px;
+                margin-bottom: 12px;
+                border-radius: 12px;
+                border: 1px solid;
+                backdrop-filter: blur(16px);
+                box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+                font-weight: 500;
+                font-size: 14px;
+                line-height: 1.4;
+                opacity: 0;
+                transform: translateX(100%);
+                transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+                animation: slideInToast 0.4s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+                position: relative;
+                overflow: hidden;
+                pointer-events: auto;
+                min-height: 60px;
+            }
+
+            /* Toast Animations */
+            @keyframes slideInToast {
+                from {
+                    opacity: 0;
+                    transform: translateX(100%);
+                }
+                to {
+                    opacity: 1;
+                    transform: translateX(0);
+                }
+            }
+
+            .flash-toast.fade-out {
+                opacity: 0;
+                transform: translateX(100%) scale(0.95);
+                margin-bottom: 0;
+                padding-top: 0;
+                padding-bottom: 0;
+                min-height: 0;
+            }
+
+            /* Icon Styles */
+            .flash-icon {
+                flex-shrink: 0;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                width: 24px;
+                height: 24px;
+                margin-top: 2px;
+            }
+
+            .flash-icon .icon {
+                font-size: 18px;
+                line-height: 1;
+            }
+
+            /* Content Area */
+            .flash-content {
+                flex: 1;
+                display: flex;
+                align-items: center;
+                min-height: 24px;
+            }
+
+            .flash-message {
+                word-wrap: break-word;
+                hyphens: auto;
+            }
+
+            /* Close Button */
+            .flash-close {
+                flex-shrink: 0;
+                background: none;
+                border: none;
+                color: currentColor;
+                cursor: pointer;
+                font-size: 20px;
+                line-height: 1;
+                opacity: 0.7;
+                padding: 4px;
+                border-radius: 4px;
+                transition: all 0.2s ease;
+                margin: -4px -4px -4px 8px;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                width: 28px;
+                height: 28px;
+            }
+
+            .flash-close:hover {
+                opacity: 1;
+                background: rgba(255, 255, 255, 0.1);
+            }
+
+            .flash-close:active {
+                transform: scale(0.95);
+            }
+
+            /* Progress Bar */
+            .flash-progress {
+                position: absolute;
+                bottom: 0;
+                left: 0;
+                height: 3px;
+                background: currentColor;
+                opacity: 0.4;
+                width: 100%;
+                transform-origin: left;
+                animation: progressToast 5s linear forwards;
+            }
+
+            @keyframes progressToast {
+                from { transform: scaleX(1); }
+                to { transform: scaleX(0); }
+            }
+
+            /* Success Toast - Green */
+            .flash-success {
+                background: linear-gradient(135deg, 
+                    rgba(22, 163, 74, 0.15) 0%, 
+                    rgba(22, 163, 74, 0.08) 100%);
+                border-color: rgba(22, 163, 74, 0.3);
+                color: #16a34a;
+            }
+
+            /* Error Toast - Red */
+            .flash-error {
+                background: linear-gradient(135deg, 
+                    rgba(220, 38, 38, 0.15) 0%, 
+                    rgba(220, 38, 38, 0.08) 100%);
+                border-color: rgba(220, 38, 38, 0.3);
+                color: #dc2626;
+            }
+
+            /* Info Toast - Blue */
+            .flash-info {
+                background: linear-gradient(135deg, 
+                    rgba(37, 99, 235, 0.15) 0%, 
+                    rgba(37, 99, 235, 0.08) 100%);
+                border-color: rgba(37, 99, 235, 0.3);
+                color: #2563eb;
+            }
+
+            /* Default Toast - Gray */
+            .flash-message {
+                background: linear-gradient(135deg, 
+                    rgba(107, 114, 128, 0.15) 0%, 
+                    rgba(107, 114, 128, 0.08) 100%);
+                border-color: rgba(107, 114, 128, 0.3);
+                color: #6b7280;
+            }
+
+            /* Light Theme Adaptations */
+            @media (prefers-color-scheme: light) {
+                .flash-toast {
+                    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.12);
+                }
+
+                .flash-success {
+                    background: linear-gradient(135deg, 
+                        rgba(22, 163, 74, 0.1) 0%, 
+                        rgba(22, 163, 74, 0.05) 100%);
+                    border-color: rgba(22, 163, 74, 0.25);
+                    color: #15803d;
+                }
+
+                .flash-error {
+                    background: linear-gradient(135deg, 
+                        rgba(220, 38, 38, 0.1) 0%, 
+                        rgba(220, 38, 38, 0.05) 100%);
+                    border-color: rgba(220, 38, 38, 0.25);
+                    color: #b91c1c;
+                }
+
+                .flash-info {
+                    background: linear-gradient(135deg, 
+                        rgba(37, 99, 235, 0.1) 0%, 
+                        rgba(37, 99, 235, 0.05) 100%);
+                    border-color: rgba(37, 99, 235, 0.25);
+                    color: #1d4ed8;
+                }
+
+                .flash-close:hover {
+                    background: rgba(0, 0, 0, 0.1);
+                }
+            }
+
+            /* Mobile Responsive */
+            @media (max-width: 768px) {
+                .flash-container {
+                    top: 10px;
+                    left: 16px;
+                    right: 16px;
+                    max-width: none;
+                }
+
+                .flash-toast {
+                    padding: 14px 16px;
+                    font-size: 13px;
+                    border-radius: 10px;
+                }
+
+                .flash-icon .icon {
+                    font-size: 16px;
+                }
+
+                .flash-close {
+                    font-size: 18px;
+                    width: 26px;
+                    height: 26px;
+                }
+            }
+
+            /* Stacked Toast Spacing */
+            .flash-toast:nth-child(1) { animation-delay: 0ms; }
+            .flash-toast:nth-child(2) { animation-delay: 100ms; }
+            .flash-toast:nth-child(3) { animation-delay: 200ms; }
+            .flash-toast:nth-child(4) { animation-delay: 300ms; }
+            .flash-toast:nth-child(5) { animation-delay: 400ms; }
+
+            /* Pause animations on hover */
+            .flash-toast:hover .flash-progress {
+                animation-play-state: paused;
+            }
+        </style>
+
+        <script>
+            // Toast Management Functions
+            function dismissToast(closeButton) {
+                const toast = closeButton.closest('.flash-toast');
+                if (toast) {
+                    toast.classList.add('fade-out');
+                    setTimeout(() => {
+                        toast.remove();
+                        // Clean up container if empty
+                        const container = document.getElementById('flashContainer');
+                        if (container && container.children.length === 0) {
+                            container.remove();
+                        }
+                    }, 400);
+                }
+            }
+
+            // Auto-dismiss toasts after 5 seconds
+            document.addEventListener('DOMContentLoaded', function() {
+                const toasts = document.querySelectorAll('[data-flash-toast]');
+                toasts.forEach((toast, index) => {
+                    setTimeout(() => {
+                        if (toast.parentNode) {
+                            toast.classList.add('fade-out');
+                            setTimeout(() => {
+                                if (toast.parentNode) {
+                                    toast.remove();
+                                    // Clean up container if empty
+                                    const container = document.getElementById('flashContainer');
+                                    if (container && container.children.length === 0) {
+                                        container.remove();
+                                    }
+                                }
+                            }, 400);
+                        }
+                    }, 5000 + (index * 200)); // Stagger auto-dismiss
+                });
+            });
+
+            // Pause auto-dismiss on hover
+            document.addEventListener('DOMContentLoaded', function() {
+                const toasts = document.querySelectorAll('[data-flash-toast]');
+                toasts.forEach(toast => {
+                    const progressBar = toast.querySelector('.flash-progress');
+                    
+                    toast.addEventListener('mouseenter', function() {
+                        if (progressBar) {
+                            progressBar.style.animationPlayState = 'paused';
+                        }
+                    });
+                    
+                    toast.addEventListener('mouseleave', function() {
+                        if (progressBar) {
+                            progressBar.style.animationPlayState = 'running';
+                        }
+                    });
+                });
+            });
+        </script>
+    {% endif %}
+{% endwith %}

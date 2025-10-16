@@ -1,0 +1,82 @@
+{% extends "base.html" %}
+
+{% block title %}Bookings & Orders - PS Framework v2 Admin{% endblock %}
+
+{% block extra_css %}
+<style>
+    .page-header {
+        text-align: center;
+        margin-bottom: 40px;
+    }
+    .page-title { 
+        font-size: clamp(32px, 5vw, 48px); 
+        letter-spacing: 0.5px; 
+        margin: 0 0 16px; 
+        color: var(--accent);
+    }
+    .coming-soon-card {
+        background: linear-gradient(180deg, rgba(255,255,255,0.04), rgba(255,255,255,0.02));
+        border: 1px solid var(--border);
+        border-radius: 12px;
+        padding: 48px 32px;
+        text-align: center;
+        box-shadow: 0 10px 30px rgba(0,0,0,0.35);
+        max-width: 600px;
+        margin: 0 auto;
+    }
+    .coming-soon-card h2 {
+        font-size: 24px;
+        color: var(--text);
+        margin: 0 0 16px;
+    }
+    .coming-soon-card p {
+        font-size: 18px;
+        color: var(--muted);
+        margin: 0 0 24px;
+        line-height: 1.6;
+    }
+    .feature-list {
+        text-align: left;
+        margin: 24px 0;
+        padding: 0;
+        list-style: none;
+    }
+    .feature-list li {
+        padding: 8px 0;
+        color: var(--muted);
+    }
+    .feature-list li:before {
+        content: "✓ ";
+        color: var(--success);
+        font-weight: bold;
+        margin-right: 8px;
+    }
+    @media (prefers-color-scheme: light) {
+        .coming-soon-card { 
+            background: #fff; 
+            box-shadow: 0 10px 24px rgba(2,6,23,0.06); 
+        }
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="page-header">
+    <h1 class="page-title">Bookings & Orders</h1>
+</div>
+
+<div class="coming-soon-card">
+    <h2>Bookings & Orders Management</h2>
+    <p>The booking and order management system is currently under development. This section will provide comprehensive tools for managing customer bookings and orders.</p>
+    
+    <ul class="feature-list">
+        <li>View and manage customer bookings</li>
+        <li>Schedule and calendar management</li>
+        <li>Order tracking and fulfillment</li>
+        <li>Payment processing and invoicing</li>
+        <li>Customer communication tools</li>
+    </ul>
+    
+    <p><strong>Coming soon!</strong> Check back for updates on booking and order management features.</p>
+</div>
+{% endblock %}

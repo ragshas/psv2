@@ -1,0 +1,15 @@
+{
+  "name": "PS Framework Dev Container",
+  "dockerComposeFile": "../docker-compose.yml",
+  "service": "ps",
+  "workspaceFolder": "/app",
+  "shutdownAction": "none",
+  "extensions": [
+    "ms-python.python",
+    "ms-python.vscode-pylance"
+  ],
+  "settings": {
+    "python.defaultInterpreterPath": "/usr/local/bin/python"
+  },
+  "postCreateCommand": "pip install -r requirements.txt"
+}

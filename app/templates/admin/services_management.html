@@ -1,0 +1,326 @@
+{% extends "base.html" %}
+
+{% block title %}Services Management - PS Framework v2 Admin{% endblock %}
+
+{% block extra_css %}
+<style>
+    .page-header {
+        text-align: center;
+        margin-bottom: 40px;
+    }
+    .page-title { 
+        font-size: clamp(32px, 5vw, 48px); 
+        letter-spacing: 0.5px; 
+        margin: 0 0 16px; 
+        color: var(--accent);
+    }
+    
+    /* Enhanced Add New Service Button */
+    .btn-add-new {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        text-decoration: none;
+        background: linear-gradient(135deg, #10b981, #059669);
+        color: white;
+        padding: 12px 20px;
+        border-radius: 10px;
+        font-weight: 600;
+        font-size: 14px;
+        box-shadow: 0 4px 12px rgba(16, 185, 129, 0.3);
+        transition: all 0.3s ease;
+        border: none;
+        cursor: pointer;
+    }
+    .btn-add-new:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 8px 20px rgba(16, 185, 129, 0.4);
+        background: linear-gradient(135deg, #059669, #047857);
+    }
+    .btn-add-new::before {
+        content: "➕";
+        font-size: 16px;
+    }
+    
+    .section-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 24px;
+        flex-wrap: wrap;
+        gap: 16px;
+    }
+    .section-title {
+        font-size: 28px;
+        color: var(--text);
+        margin: 0;
+        font-weight: 700;
+    }
+    
+    /* Enhanced Table Styling */
+    .services-table {
+        background: linear-gradient(180deg, rgba(255,255,255,0.08), rgba(255,255,255,0.04));
+        border: 1px solid var(--border);
+        border-radius: 16px;
+        overflow: hidden;
+        box-shadow: 0 20px 40px rgba(0,0,0,0.15);
+        transition: all 0.3s ease;
+    }
+    .services-table:hover {
+        box-shadow: 0 25px 50px rgba(0,0,0,0.2);
+    }
+    .services-table table {
+        width: 100%;
+        border-collapse: collapse;
+    }
+    .services-table th, .services-table td {
+        padding: 20px 16px;
+        text-align: left;
+        border-bottom: 1px solid rgba(255,255,255,0.1);
+    }
+    .services-table th {
+        background: linear-gradient(135deg, rgba(59, 130, 246, 0.1), rgba(37, 99, 235, 0.1));
+        font-weight: 700;
+        color: var(--text);
+        text-transform: uppercase;
+        font-size: 12px;
+        letter-spacing: 0.5px;
+    }
+    .services-table tbody tr {
+        transition: all 0.3s ease;
+    }
+    .services-table tbody tr:hover {
+        background: rgba(59, 130, 246, 0.05);
+        transform: scale(1.01);
+    }
+    .services-table tr:last-child td {
+        border-bottom: none;
+    }
+    .price {
+        font-weight: 700;
+        color: #10b981;
+        font-size: 16px;
+    }
+    .id-col {
+        width: 80px;
+        text-align: center;
+        font-weight: 600;
+        color: var(--muted);
+    }
+    .name-col {
+        font-weight: 700;
+        font-size: 16px;
+        color: var(--text);
+    }
+    .actions-col {
+        width: 160px;
+        text-align: center;
+    }
+    
+    /* Enhanced Action Buttons */
+    .actions-container {
+        display: flex;
+        gap: 8px;
+        justify-content: center;
+        align-items: center;
+    }
+    .action-btn {
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+        padding: 8px 14px;
+        border: none;
+        border-radius: 8px;
+        text-decoration: none;
+        font-size: 13px;
+        font-weight: 600;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        text-transform: capitalize;
+        min-width: 70px;
+        justify-content: center;
+    }
+    
+    /* Edit Button - Blue */
+    .action-btn.edit {
+        background: linear-gradient(135deg, #3b82f6, #2563eb);
+        color: white;
+        box-shadow: 0 4px 12px rgba(59, 130, 246, 0.3);
+    }
+    .action-btn.edit:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 8px 20px rgba(59, 130, 246, 0.4);
+        background: linear-gradient(135deg, #2563eb, #1d4ed8);
+    }
+    .action-btn.edit::before {
+        content: "✏️";
+        font-size: 14px;
+    }
+    
+    /* Delete Button - Red */
+    .action-btn.delete {
+        background: linear-gradient(135deg, #ef4444, #dc2626);
+        color: white;
+        box-shadow: 0 4px 12px rgba(239, 68, 68, 0.3);
+    }
+    .action-btn.delete:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 8px 20px rgba(239, 68, 68, 0.4);
+        background: linear-gradient(135deg, #dc2626, #b91c1c);
+    }
+    .action-btn.delete::before {
+        content: "🗑️";
+        font-size: 14px;
+    }
+    
+    .actions-form {
+        display: inline;
+    }
+    
+    .empty-state {
+        text-align: center;
+        padding: 60px 24px;
+        color: var(--muted);
+    }
+    .empty-state h3 {
+        font-size: 24px;
+        margin-bottom: 12px;
+        color: var(--text);
+    }
+    .empty-state p {
+        font-size: 16px;
+        margin-bottom: 24px;
+    }
+    
+    .back-link {
+        display: inline-flex;
+        align-items: center;
+        text-decoration: none;
+        color: var(--muted);
+        margin-bottom: 24px;
+        transition: all 0.3s ease;
+        font-weight: 500;
+    }
+    .back-link:hover {
+        color: var(--accent);
+        transform: translateX(-4px);
+    }
+    .back-link::before {
+        content: "← ";
+        margin-right: 8px;
+        font-size: 16px;
+    }
+    
+    @media (prefers-color-scheme: light) {
+        .services-table {
+            background: linear-gradient(180deg, #ffffff, #f8fafc);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.08);
+        }
+        .services-table:hover {
+            box-shadow: 0 25px 50px rgba(0,0,0,0.12);
+        }
+        .services-table th { 
+            background: linear-gradient(135deg, rgba(59, 130, 246, 0.05), rgba(37, 99, 235, 0.05));
+        }
+        .services-table tbody tr:hover {
+            background: rgba(59, 130, 246, 0.03);
+        }
+    }
+    
+    @media (max-width: 768px) {
+        .section-header {
+            flex-direction: column;
+            align-items: stretch;
+        }
+        .services-table {
+            overflow-x: auto;
+            border-radius: 12px;
+        }
+        .services-table th, .services-table td {
+            padding: 16px 12px;
+        }
+        .actions-container {
+            flex-direction: column;
+            gap: 6px;
+        }
+        .action-btn {
+            min-width: 60px;
+            padding: 6px 10px;
+            font-size: 12px;
+        }
+        .btn-add-new {
+            width: 100%;
+            justify-content: center;
+        }
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<a href="/admin" class="back-link">Back to Admin Dashboard</a>
+
+<div class="page-header">
+    <h1 class="page-title">Services Management</h1>
+</div>
+
+<section class="services-section">
+    <div class="section-header">
+        <h2 class="section-title">All Services</h2>
+        <a href="/admin/services/new" class="btn-add-new">Add New Service</a>
+    </div>
+
+    {% if services %}
+        <div class="services-table">
+            <table>
+                <thead>
+                    <tr>
+                        <th class="id-col">ID</th>
+                        <th>Name</th>
+                        <th>Description</th>
+                        <th>Price</th>
+                        <th class="actions-col">Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for service in services %}
+                    <tr>
+                        <td class="id-col">{{ service.id }}</td>
+                        <td class="name-col">{{ service.name }}</td>
+                        <td>
+                            {% if service.description %}
+                                {{ service.description }}
+                            {% else %}
+                                <em style="color: var(--muted);">No description</em>
+                            {% endif %}
+                        </td>
+                        <td class="price">
+                            {% if service.price %}
+                                ${{ "%.2f"|format(service.price) }}
+                            {% else %}
+                                <em style="color: var(--muted);">Contact for pricing</em>
+                            {% endif %}
+                        </td>
+                        <td class="actions-col">
+                            <div class="actions-container">
+                                <a href="/admin/services/edit/{{ service.id }}" class="action-btn edit">Edit</a>
+                                <form class="actions-form" method="POST" action="/admin/services/delete/{{ service.id }}">
+                                    <button type="submit" class="action-btn delete" onclick="return confirm('Are you sure you want to delete this service? This action cannot be undone.');">Delete</button>
+                                </form>
+                            </div>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    {% else %}
+        <div class="services-table">
+            <div class="empty-state">
+                <h3>No services yet</h3>
+                <p>Start by adding your first service to get your business online!</p>
+                <a href="/admin/services/new" class="btn-add-new" style="margin-top: 16px;">Add Your First Service</a>
+            </div>
+        </div>
+    {% endif %}
+</section>
+{% endblock %}

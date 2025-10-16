@@ -1,0 +1,120 @@
+{% extends "base.html" %}
+
+{% block title %}Our Services - PS Framework v2{% endblock %}
+
+{% block extra_css %}
+<style>
+    .page-header {
+        text-align: center;
+        margin-bottom: 32px;
+    }
+    .page-title { 
+        font-size: clamp(28px, 5vw, 42px); 
+        letter-spacing: 0.5px; 
+        margin: 0 0 12px; 
+    }
+    .services-table {
+        background: linear-gradient(180deg, rgba(255,255,255,0.04), rgba(255,255,255,0.02));
+        border: 1px solid var(--border);
+        border-radius: 12px;
+        overflow: hidden;
+        box-shadow: 0 10px 30px rgba(0,0,0,0.35);
+    }
+    .services-table table {
+        width: 100%;
+        border-collapse: collapse;
+    }
+    .services-table th, .services-table td {
+        padding: 16px;
+        text-align: left;
+        border-bottom: 1px solid var(--border);
+    }
+    .services-table th {
+        background: rgba(255,255,255,0.05);
+        font-weight: 600;
+        color: var(--text);
+    }
+    .services-table tr:last-child td {
+        border-bottom: none;
+    }
+    .price {
+        font-weight: 600;
+        color: var(--accent);
+    }
+    .empty-state {
+        text-align: center;
+        padding: 48px 24px;
+        color: var(--muted);
+        background: linear-gradient(180deg, rgba(255,255,255,0.04), rgba(255,255,255,0.02));
+        border: 1px solid var(--border);
+        border-radius: 12px;
+        box-shadow: 0 10px 30px rgba(0,0,0,0.35);
+    }
+    .empty-state h2 {
+        margin: 0 0 8px;
+        font-size: 20px;
+        color: var(--text);
+    }
+    @media (prefers-color-scheme: light) {
+        .services-table, .empty-state { 
+            background: #fff; 
+            box-shadow: 0 10px 24px rgba(2,6,23,0.06); 
+        }
+        .services-table th { background: #f8fafc; }
+    }
+    @media (max-width: 768px) {
+        .services-table {
+            font-size: 14px;
+        }
+        .services-table th, .services-table td {
+            padding: 12px 8px;
+        }
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="page-header">
+    <h1 class="page-title">Our Services</h1>
+</div>
+
+{% if services %}
+    <div class="services-table">
+        <table>
+            <thead>
+                <tr>
+                    <th>Service Name</th>
+                    <th>Description</th>
+                    <th>Price</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for service in services %}
+                <tr>
+                    <td><strong>{{ service.name }}</strong></td>
+                    <td>
+                        {% if service.description %}
+                            {{ service.description }}
+                        {% else %}
+                            <em style="color: var(--muted);">No description available</em>
+                        {% endif %}
+                    </td>
+                    <td class="price">
+                        {% if service.price %}
+                            ${{ "%.2f"|format(service.price) }}
+                        {% else %}
+                            <em style="color: var(--muted);">Contact for pricing</em>
+                        {% endif %}
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+{% else %}
+    <div class="empty-state">
+        <h2>No services available yet.</h2>
+        <p>We're working on adding our service offerings. Please check back soon!</p>
+    </div>
+{% endif %}
+{% endblock %}
