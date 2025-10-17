@@ -2,26 +2,54 @@
 
 {% block title %}Register - PS Framework v2{% endblock %}
 
+{% block extra_css %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/forms.css') }}">
+{% endblock %}
+
 {% block content %}
-<div class="container">
-    <div class="form-container">
-        <h1>Register</h1>
+<div class="auth-container">
+    <div class="auth-card">
+        <div class="auth-header">
+            <h1>Join PSv2</h1>
+            <p>Create your account to get started</p>
+        </div>
         
-        <form method="POST">
+        <form method="POST" class="auth-form">
             <div class="form-group">
-                <label for="username">Username:</label>
-                <input type="text" id="username" name="username" required>
+                <label for="username">Username</label>
+                <input 
+                    type="text" 
+                    id="username" 
+                    name="username" 
+                    required 
+                    placeholder="Choose a username"
+                    autocomplete="username"
+                    minlength="3"
+                    maxlength="80"
+                >
+                <span class="form-help">Must be 3-80 characters long</span>
             </div>
             
             <div class="form-group">
-                <label for="password">Password:</label>
-                <input type="password" id="password" name="password" required>
+                <label for="password">Password</label>
+                <input 
+                    type="password" 
+                    id="password" 
+                    name="password" 
+                    required 
+                    placeholder="Create a secure password"
+                    autocomplete="new-password"
+                    minlength="6"
+                >
+                <span class="form-help">Must be at least 6 characters long</span>
             </div>
             
-            <button type="submit" class="btn btn-primary">Register</button>
+            <button type="submit" class="btn btn-primary">Create Account</button>
         </form>
         
-        <p><a href="{{ url_for('auth_bp.login') }}">Already have an account? Login here</a></p>
+        <div class="auth-footer">
+            <p>Already have an account? <a href="{{ url_for('auth_bp.login') }}" class="auth-link">Sign in</a></p>
+        </div>
     </div>
 </div>
 {% endblock %}

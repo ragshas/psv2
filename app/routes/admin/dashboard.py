@@ -6,12 +6,14 @@ for business owners to manage their PS Framework application.
 """
 
 from flask import Blueprint, render_template
+from app.utils.decorators import admin_required
 
 # Create admin blueprint with URL prefix
 admin_bp = Blueprint('admin', __name__, url_prefix='/admin')
 
 
 @admin_bp.route('/')
+@admin_required
 def dashboard():
     """Admin dashboard homepage.
     

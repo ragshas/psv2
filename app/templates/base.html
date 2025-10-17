@@ -30,6 +30,10 @@
             
             {% if current_user.is_authenticated %}
                 <li><span class="nav-greeting">Hi, {{ current_user.username }}</span></li>
+                {% if current_user.role == 'customer' %}
+                    <li><a href="{{ url_for('account.profile') }}" class="account-link {% if request.path.startswith('/account') %}active{% endif %}">My Account</a></li>
+                    <li><a href="{{ url_for('bookings.all_bookings') }}" class="bookings-link {% if request.path.startswith('/bookings') %}active{% endif %}">My Bookings</a></li>
+                {% endif %}
                 {% if current_user.role == 'admin' %}
                     <li><a href="{{ url_for('admin.dashboard') }}" class="admin-link">Admin</a></li>
                 {% endif %}

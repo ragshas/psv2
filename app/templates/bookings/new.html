@@ -1,0 +1,141 @@
+{% extends "base.html" %}
+
+{% block title %}Book {{ service.name }} - PSv2{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/bookings.css') }}">
+{% endblock %}
+
+{% block content %}
+<div class="booking-container">
+    <!-- Header -->
+    <div class="booking-header">
+        <h1 class="page-title">Book Service</h1>
+        <nav aria-label="breadcrumb">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="{{ url_for('home_bp.index') }}">Home</a></li>
+                <li class="breadcrumb-item"><a href="{{ url_for('services.services_list') }}">Services</a></li>
+                <li class="breadcrumb-item active" aria-current="page">Book {{ service.name }}</li>
+            </ol>
+        </nav>
+    </div>
+
+    <!-- Service Information -->
+    <div class="service-info-card">
+        <div class="service-details">
+            <h2 class="service-name">{{ service.name }}</h2>
+            {% if service.description %}
+            <p class="service-description">{{ service.description }}</p>
+            {% endif %}
+            {% if service.price %}
+            <div class="service-price">
+                <span class="price-label">Price:</span>
+                <span class="price-amount">${{ "%.2f"|format(service.price) }}</span>
+            </div>
+            {% endif %}
+        </div>
+    </div>
+
+    <!-- Booking Form -->
+    <div class="booking-form-container">
+        <h3 class="form-title">Schedule Your Appointment</h3>
+        
+        <form method="POST" class="booking-form">
+            {% if not current_user.is_authenticated %}
+            <!-- Guest Information Section -->
+            <div class="guest-info-section">
+                <h4 class="section-title"><i class="fas fa-user"></i> Your Information</h4>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="guest_name" class="form-label">Full Name <span class="required">*</span></label>
+                        <input type="text" id="guest_name" name="guest_name" class="form-control" 
+                               placeholder="Enter your full name" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="guest_email" class="form-label">Email Address <span class="required">*</span></label>
+                        <input type="email" id="guest_email" name="guest_email" class="form-control" 
+                               placeholder="your@email.com" required>
+                    </div>
+                </div>
+                
+                <div class="form-group">
+                    <label for="guest_phone" class="form-label">Phone Number</label>
+                    <input type="tel" id="guest_phone" name="guest_phone" class="form-control" 
+                           placeholder="(555) 123-4567">
+                    <small class="form-text">Optional: We may call to confirm your appointment</small>
+                </div>
+            </div>
+            {% endif %}
+
+            <!-- Appointment Details Section -->
+            <div class="appointment-section">
+                <h4 class="section-title"><i class="fas fa-calendar"></i> Appointment Details</h4>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="booking_date" class="form-label">Date <span class="required">*</span></label>
+                        <input type="date" id="booking_date" name="booking_date" class="form-control" 
+                               min="{{ min_date }}" required>
+                        <small class="form-text">Select your preferred appointment date</small>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="booking_time" class="form-label">Time <span class="required">*</span></label>
+                        <select id="booking_time" name="booking_time" class="form-control" required>
+                            <option value="">Choose time</option>
+                            <option value="09:00">9:00 AM</option>
+                            <option value="10:00">10:00 AM</option>
+                            <option value="11:00">11:00 AM</option>
+                            <option value="12:00">12:00 PM</option>
+                            <option value="13:00">1:00 PM</option>
+                            <option value="14:00">2:00 PM</option>
+                            <option value="15:00">3:00 PM</option>
+                            <option value="16:00">4:00 PM</option>
+                            <option value="17:00">5:00 PM</option>
+                        </select>
+                        <small class="form-text">Business hours: 9 AM - 5 PM</small>
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="notes" class="form-label">Special Requests or Notes</label>
+                <textarea id="notes" name="notes" class="form-control" rows="4" 
+                          placeholder="Any special requests, allergies, or additional information..."></textarea>
+                <small class="form-text">Optional: Let us know about any specific needs</small>
+            </div>
+
+            <div class="form-actions">
+                <button type="submit" class="btn btn-primary">
+                    <i class="fas fa-calendar-check"></i> Confirm Booking
+                </button>
+                <a href="{{ url_for('services.services_list') }}" class="btn btn-secondary">
+                    <i class="fas fa-arrow-left"></i> Back to Services
+                </a>
+            </div>
+        </form>
+    </div>
+
+    <!-- Information Section -->
+    <div class="booking-info">
+        <div class="info-card">
+            <h4><i class="fas fa-info-circle"></i> Booking Information</h4>
+            <ul class="info-list">
+                <li><i class="fas fa-check"></i> You'll receive a confirmation email</li>
+                <li><i class="fas fa-check"></i> Bookings can be cancelled up to 24 hours in advance</li>
+                <li><i class="fas fa-check"></i> Our team will contact you to confirm details</li>
+                <li><i class="fas fa-check"></i> Please arrive 10 minutes early</li>
+            </ul>
+        </div>
+    </div>
+</div>
+
+<script>
+// Additional JavaScript for booking form
+document.addEventListener('DOMContentLoaded', function() {
+    // The minimum date is already set by the server-side template
+    // Add any additional client-side functionality here if needed
+    console.log('Booking form loaded');
+});
+</script>
+{% endblock %}

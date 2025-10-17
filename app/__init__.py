@@ -1,7 +1,7 @@
 import os
 from flask import Flask, app
 from flask_login import LoginManager
-from app.db import db
+from app.db import db, migrate
 
 def create_app():
     """Create and configure the Flask application."""
@@ -17,6 +17,9 @@ def create_app():
 
     # ---- Initialize SQLAlchemy ----
     db.init_app(app)
+
+    # ---- Initialize Flask-Migrate ----
+    migrate.init_app(app, db)
 
     # ---- Register custom CLI commands ----
     from app.cli import register_commands
@@ -34,25 +37,30 @@ def create_app():
         from app.models import User
         return User.query.get(int(user_id))
 
+    # ---- Error Handlers ----
+    @app.errorhandler(403)
+    def access_denied(error):
+        from flask import render_template
+        return render_template('errors/403.html'), 403
+
     # ---- Import Models ----
     from app import models  # Must import models before creating tables
-
-    # ---- Auto-create Tables ----
-    with app.app_context():
-        db.create_all()
-        print("✅ Database initialized and tables created (if not existing).")
 
     # ---- Register Blueprints ----
     from app.routes.home import home_bp
     app.register_blueprint(home_bp)
     from app.routes.auth import auth_bp
     app.register_blueprint(auth_bp)
+    from app.routes.account import account_bp
+    app.register_blueprint(account_bp)
     from app.routes.shop import shop_bp
     app.register_blueprint(shop_bp)
     from app.routes.contact import contact_bp
     app.register_blueprint(contact_bp)
     from app.routes.services import services_bp
     app.register_blueprint(services_bp)
+    from app.routes.bookings import bookings_bp
+    app.register_blueprint(bookings_bp)
     from app.routes.admin.dashboard import admin_bp
     app.register_blueprint(admin_bp)
     from app.routes.admin.services import admin_services_bp

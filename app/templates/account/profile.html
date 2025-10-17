@@ -1,0 +1,150 @@
+{% extends "base.html" %}
+
+{% block title %}My Account - PS Framework v2{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/account.css') }}">
+<link rel="stylesheet" href="{{ url_for('static', filename='css/theme.css') }}">
+{% endblock %}
+
+{% block content %}
+<div class="account-container">
+    <div class="account-header">
+        <h1 class="account-title">My Account</h1>
+        <p class="account-subtitle">Manage your profile and account settings</p>
+    </div>
+
+    <div class="account-content">
+        <div class="profile-card">
+            <div class="profile-header">
+                <div class="profile-avatar">
+                    <span class="avatar-text">{{ user.username[0].upper() }}</span>
+                </div>
+                <div class="profile-info">
+                    <h2 class="profile-name">{{ user.username }}</h2>
+                    <span class="profile-role role-{{ user.role }}">{{ user.role.title() }} Account</span>
+                </div>
+            </div>
+
+            <div class="profile-details">
+                <div class="detail-section">
+                    <h3 class="section-title">Account Information</h3>
+                    <div class="detail-grid">
+                        <div class="detail-item">
+                            <span class="detail-label">Username</span>
+                            <span class="detail-value">{{ user.username }}</span>
+                        </div>
+                        <div class="detail-item">
+                            <span class="detail-label">Account Type</span>
+                            <span class="detail-value">
+                                <span class="role-badge role-{{ user.role }}">
+                                    {% if user.role == 'admin' %}
+                                        🛡️ Administrator
+                                    {% elif user.role == 'customer' %}
+                                        👤 Customer
+                                    {% else %}
+                                        📋 {{ user.role.title() }}
+                                    {% endif %}
+                                </span>
+                            </span>
+                        </div>
+                        <div class="detail-item">
+                            <span class="detail-label">Member Since</span>
+                            <span class="detail-value">
+                                {% if user.created_at %}
+                                    {{ user.created_at.strftime('%B %d, %Y') }}
+                                {% else %}
+                                    Long-time member
+                                {% endif %}
+                            </span>
+                        </div>
+                        <div class="detail-item">
+                            <span class="detail-label">Account Status</span>
+                            <span class="detail-value">
+                                <span class="status-badge active">✅ Active</span>
+                            </span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="detail-section">
+                    <h3 class="section-title">Quick Actions</h3>
+                    <div class="action-grid">
+                        <a href="{{ url_for('account.settings') }}" class="action-card">
+                            <div class="action-icon">⚙️</div>
+                            <div class="action-content">
+                                <h4 class="action-title">Account Settings</h4>
+                                <p class="action-description">Update your preferences and settings</p>
+                            </div>
+                        </a>
+                        
+                        <a href="{{ url_for('auth_bp.change_password') }}" class="action-card">
+                            <div class="action-icon">🔒</div>
+                            <div class="action-content">
+                                <h4 class="action-title">Change Password</h4>
+                                <p class="action-description">Update your account password</p>
+                            </div>
+                        </a>
+
+                        <a href="{{ url_for('contact_bp.contact') }}" class="action-card">
+                            <div class="action-icon">📧</div>
+                            <div class="action-content">
+                                <h4 class="action-title">Contact Support</h4>
+                                <p class="action-description">Get help with your account</p>
+                            </div>
+                        </a>
+
+                        <a href="{{ url_for('services.services_list') }}" class="action-card">
+                            <div class="action-icon">🛍️</div>
+                            <div class="action-content">
+                                <h4 class="action-title">Browse Services</h4>
+                                <p class="action-description">Explore our available services</p>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="account-sidebar">
+            <div class="sidebar-card">
+                <h3 class="sidebar-title">Account Summary</h3>
+                <div class="summary-stats">
+                    <div class="stat-item">
+                        <span class="stat-number">{{ user.username|length }}</span>
+                        <span class="stat-label">Characters in Username</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-number">{{ days_as_member if days_as_member else "∞" }}</span>
+                        <span class="stat-label">Days as Member</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-number">{{ user.role|length }}</span>
+                        <span class="stat-label">Role Level</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="sidebar-card">
+                <h3 class="sidebar-title">Security</h3>
+                <div class="security-status">
+                    <div class="security-item">
+                        <span class="security-icon">🔐</span>
+                        <div class="security-info">
+                            <span class="security-label">Password</span>
+                            <span class="security-status-text">Protected</span>
+                        </div>
+                    </div>
+                    <div class="security-item">
+                        <span class="security-icon">🛡️</span>
+                        <div class="security-info">
+                            <span class="security-label">Account</span>
+                            <span class="security-status-text">Secure</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,169 @@
+{% extends "base.html" %}
+
+{% block title %}{{ page_title }} - PSv2{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/bookings.css') }}">
+{% endblock %}
+
+{% block content %}
+<div class="bookings-container">
+    <!-- Header -->
+    <div class="bookings-header">
+        <h1 class="page-title">{{ page_title }}</h1>
+        <nav aria-label="breadcrumb">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="{{ url_for('home_bp.index') }}">Home</a></li>
+                {% if current_user.role == 'admin' %}
+                <li class="breadcrumb-item"><a href="{{ url_for('admin_bp.dashboard') }}">Admin</a></li>
+                {% endif %}
+                <li class="breadcrumb-item active" aria-current="page">{{ page_title }}</li>
+            </ol>
+        </nav>
+        
+        {% if current_user.role != 'admin' %}
+        <div class="header-actions">
+            <a href="{{ url_for('services.services_list') }}" class="btn btn-primary">
+                <i class="fas fa-plus"></i> Book New Service
+            </a>
+        </div>
+        {% endif %}
+    </div>
+
+    <!-- Statistics (Admin Only) -->
+    {% if current_user.role == 'admin' and bookings %}
+    <div class="booking-stats">
+        <div class="stat-card">
+            <div class="stat-number">{{ bookings|length }}</div>
+            <div class="stat-label">Total Bookings</div>
+        </div>
+        <div class="stat-card">
+            <div class="stat-number">{{ bookings|selectattr('status', 'equalto', 'pending')|list|length }}</div>
+            <div class="stat-label">Pending</div>
+        </div>
+        <div class="stat-card">
+            <div class="stat-number">{{ bookings|selectattr('status', 'equalto', 'confirmed')|list|length }}</div>
+            <div class="stat-label">Confirmed</div>
+        </div>
+        <div class="stat-card">
+            <div class="stat-number">{{ bookings|selectattr('status', 'equalto', 'completed')|list|length }}</div>
+            <div class="stat-label">Completed</div>
+        </div>
+    </div>
+    {% endif %}
+
+    <!-- Bookings List -->
+    <div class="bookings-list">
+        {% if bookings %}
+            {% for booking in bookings %}
+            <div class="booking-card">
+                <div class="booking-header-section">
+                    <div class="booking-main-info">
+                        <h3 class="service-name">{{ booking.service.name }}</h3>
+                        {% if current_user.role == 'admin' %}
+                        <p class="customer-name">
+                            <i class="fas fa-user"></i> 
+                            {{ booking.get_customer_name() }}
+                            {% if booking.is_guest_booking() %}
+                                <span class="guest-badge">Guest</span>
+                            {% endif %}
+                        </p>
+                        {% if booking.is_guest_booking() and booking.guest_email %}
+                        <p class="customer-email">
+                            <i class="fas fa-envelope"></i> {{ booking.guest_email }}
+                        </p>
+                        {% endif %}
+                        {% endif %}
+                    </div>
+                    <div class="booking-status">
+                        <span class="status-badge status-{{ booking.status }}">
+                            {{ booking.status.title() }}
+                        </span>
+                    </div>
+                </div>
+
+                <div class="booking-details">
+                    <div class="detail-item">
+                        <i class="fas fa-calendar-alt"></i>
+                        <span class="detail-label">Date & Time:</span>
+                        <span class="detail-value">{{ booking.booking_date.strftime('%B %d, %Y at %I:%M %p') }}</span>
+                    </div>
+                    
+                    {% if booking.service.price %}
+                    <div class="detail-item">
+                        <i class="fas fa-dollar-sign"></i>
+                        <span class="detail-label">Price:</span>
+                        <span class="detail-value">${{ "%.2f"|format(booking.service.price) }}</span>
+                    </div>
+                    {% endif %}
+                    
+                    <div class="detail-item">
+                        <i class="fas fa-clock"></i>
+                        <span class="detail-label">Booked on:</span>
+                        <span class="detail-value">{{ booking.created_at.strftime('%b %d, %Y') }}</span>
+                    </div>
+
+                    {% if booking.notes %}
+                    <div class="detail-item notes">
+                        <i class="fas fa-sticky-note"></i>
+                        <span class="detail-label">Notes:</span>
+                        <span class="detail-value">{{ booking.notes }}</span>
+                    </div>
+                    {% endif %}
+                </div>
+
+                <div class="booking-actions">
+                    {% if current_user.role == 'admin' %}
+                        <!-- Admin Actions -->
+                        <form method="POST" action="{{ url_for('bookings.update_status', booking_id=booking.id) }}" class="status-form">
+                            <select name="status" class="form-control status-select" onchange="this.form.submit()">
+                                <option value="pending" {% if booking.status == 'pending' %}selected{% endif %}>Pending</option>
+                                <option value="confirmed" {% if booking.status == 'confirmed' %}selected{% endif %}>Confirmed</option>
+                                <option value="cancelled" {% if booking.status == 'cancelled' %}selected{% endif %}>Cancelled</option>
+                                <option value="completed" {% if booking.status == 'completed' %}selected{% endif %}>Completed</option>
+                            </select>
+                        </form>
+                    {% else %}
+                        <!-- Customer Actions -->
+                        {% if booking.status not in ['cancelled', 'completed'] %}
+                        <form method="POST" action="{{ url_for('bookings.cancel_booking', booking_id=booking.id) }}" 
+                              onsubmit="return confirm('Are you sure you want to cancel this booking?')">
+                            <button type="submit" class="btn btn-danger btn-sm">
+                                <i class="fas fa-times"></i> Cancel Booking
+                            </button>
+                        </form>
+                        {% endif %}
+                    {% endif %}
+                </div>
+            </div>
+            {% endfor %}
+        {% else %}
+            <!-- Empty State -->
+            <div class="empty-state">
+                <div class="empty-icon">
+                    <i class="fas fa-calendar-times"></i>
+                </div>
+                <h3 class="empty-title">
+                    {% if current_user.role == 'admin' %}
+                        No bookings yet
+                    {% else %}
+                        You haven't made any bookings yet
+                    {% endif %}
+                </h3>
+                <p class="empty-text">
+                    {% if current_user.role == 'admin' %}
+                        Bookings will appear here once customers start making appointments.
+                    {% else %}
+                        Ready to book your first service? Check out our available options!
+                    {% endif %}
+                </p>
+                {% if current_user.role != 'admin' %}
+                <a href="{{ url_for('services.services_list') }}" class="btn btn-primary">
+                    <i class="fas fa-calendar-plus"></i> Browse Services
+                </a>
+                {% endif %}
+            </div>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}

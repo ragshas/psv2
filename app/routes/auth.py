@@ -99,11 +99,16 @@ def login():
                 login_user(user, remember=remember_me)
                 flash(f'Welcome back, {user.username}!', 'success')
                 
-                # Redirect to next page or home
+                # Redirect based on user role and next page
                 next_page = request.form.get('next') or request.args.get('next')
                 if next_page:
                     return redirect(next_page)
-                return redirect(url_for('home_bp.index'))
+                
+                # Redirect admins to admin dashboard, regular users to home
+                if user.role == 'admin':
+                    return redirect(url_for('admin.dashboard'))
+                else:
+                    return redirect(url_for('home_bp.index'))
             else:
                 # Invalid credentials
                 flash('Invalid username or password.', 'error')

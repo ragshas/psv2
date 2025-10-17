@@ -1,3 +1,52 @@
+/* Universal Form Styling - Consistent across all forms */
+
+/* Universal Form Input Base Styles */
+.form-input,
+.form-group input[type="text"],
+.form-group input[type="email"],
+.form-group input[type="password"],
+.form-group input[type="number"],
+.form-group textarea {
+    width: 100%;
+    padding: 12px 16px;
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    background: rgba(255, 255, 255, 0.05);
+    color: var(--text-primary);
+    font-size: 16px;
+    transition: all 0.3s ease;
+    font-family: inherit;
+    box-sizing: border-box;
+}
+
+/* Universal Form Input Focus Styles - Consistent for all forms */
+.form-input:focus,
+.form-group input[type="text"]:focus,
+.form-group input[type="email"]:focus,
+.form-group input[type="password"]:focus,
+.form-group input[type="number"]:focus,
+.form-group textarea:focus {
+    outline: none;
+    border-color: var(--accent);
+    box-shadow: 0 0 0 3px rgba(147, 197, 253, 0.1);
+    background: var(--bg-secondary);
+    transform: translateY(-1px);
+}
+
+/* Universal Form Textarea Specific */
+.form-group textarea {
+    resize: vertical;
+    min-height: 100px;
+}
+
+/* Universal Form Input Placeholder */
+.form-input::placeholder,
+.form-group input::placeholder,
+.form-group textarea::placeholder {
+    color: var(--text-muted);
+    opacity: 0.7;
+}
+
 /* Authentication Forms - Specific Styling */
 
 /* Auth Container */
@@ -80,9 +129,9 @@
 .auth-form input:focus {
     outline: none;
     border-color: var(--accent);
-    box-shadow: 0 0 0 4px rgba(147, 197, 253, 0.15);
-    background: rgba(30, 41, 59, 0.8);
-    transform: translateY(-2px);
+    box-shadow: 0 0 0 3px rgba(147, 197, 253, 0.1);
+    background: var(--bg-secondary);
+    transform: translateY(-1px);
 }
 
 .auth-form input::placeholder {
@@ -616,7 +665,7 @@
     outline: none;
     border-color: var(--accent);
     box-shadow: 0 0 0 4px rgba(147, 197, 253, 0.15);
-    background: rgba(30, 41, 59, 0.8);
+    background: var(--bg-secondary);
     transform: translateY(-2px);
 }
 

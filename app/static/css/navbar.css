@@ -140,6 +140,22 @@
     transform: translateY(-1px) !important;
 }
 
+/* Account Link Special Styling */
+.account-link {
+    background: linear-gradient(90deg, #059669, #10b981) !important;
+    color: #ffffff !important;
+    padding: 8px 14px !important;
+    border-radius: 6px !important;
+    font-weight: 500 !important;
+    transition: all 0.3s ease !important;
+}
+
+.account-link:hover {
+    background: linear-gradient(90deg, #047857, #059669) !important;
+    color: #ffffff !important;
+    transform: translateY(-1px) !important;
+}
+
 /* Logout Link Special Styling */
 .logout-link {
     background: linear-gradient(90deg, #dc2626, #ef4444) !important;

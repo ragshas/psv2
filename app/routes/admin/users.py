@@ -5,12 +5,14 @@ viewing user accounts, managing roles, and handling user permissions.
 """
 
 from flask import Blueprint, render_template
+from app.utils.decorators import admin_required
 
 # Create admin users blueprint with URL prefix
 admin_users_bp = Blueprint('admin_users', __name__, url_prefix='/admin/users')
 
 
 @admin_users_bp.route('/')
+@admin_required
 def users_dashboard():
     """User management dashboard.
     

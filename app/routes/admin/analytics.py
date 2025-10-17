@@ -5,12 +5,14 @@ including customer metrics, performance analytics, and business reporting.
 """
 
 from flask import Blueprint, render_template
+from app.utils.decorators import admin_required
 
 # Create admin analytics blueprint with URL prefix
 admin_analytics_bp = Blueprint('admin_analytics', __name__, url_prefix='/admin/analytics')
 
 
 @admin_analytics_bp.route('/')
+@admin_required
 def analytics_dashboard():
     """Analytics and business insights dashboard.
     

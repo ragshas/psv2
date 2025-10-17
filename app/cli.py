@@ -233,13 +233,13 @@ def delete_service():
 
 # Database Management Commands
 
-@click.group('db')
-def db_cli():
+@click.group('database')
+def database_cli():
     """Database management commands."""
     pass
 
 
-@db_cli.command('reset')
+@database_cli.command('reset')
 @with_appcontext
 def reset_db():
     """Reset the database by dropping and recreating all tables."""
@@ -256,7 +256,7 @@ def reset_db():
     click.echo(click.style('✅ Database reset successfully!', fg='green'))
 
 
-@db_cli.command('status')
+@database_cli.command('status')
 @with_appcontext
 def db_status():
     """Show database status with counts of users and services."""
@@ -273,4 +273,4 @@ def register_commands(app):
     """Register CLI commands with the Flask app."""
     app.cli.add_command(user_cli)
     app.cli.add_command(service_cli)
-    app.cli.add_command(db_cli)
+    app.cli.add_command(database_cli)

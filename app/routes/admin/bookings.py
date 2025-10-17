@@ -4,18 +4,20 @@ This module handles admin functionality for managing bookings and orders includi
 viewing customer bookings, managing scheduling, and handling order fulfillment.
 """
 
-from flask import Blueprint, render_template
+from flask import Blueprint, redirect, url_for
+from app.utils.decorators import admin_required
 
 # Create admin bookings blueprint with URL prefix
 admin_bookings_bp = Blueprint('admin_bookings', __name__, url_prefix='/admin/bookings')
 
 
 @admin_bookings_bp.route('/')
+@admin_required
 def bookings_dashboard():
     """Bookings and orders management dashboard.
     
-    Renders the main bookings management page where administrators can view
-    customer bookings, manage scheduling, and handle order fulfillment.
+    Redirects to the main bookings page where administrators can view all
+    customer bookings and manage their status.
     Accessible at /admin/bookings route.
     """
-    return render_template('admin/bookings.html')
+    return redirect(url_for('bookings.all_bookings'))

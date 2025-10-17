@@ -8,12 +8,14 @@ from flask import Blueprint, render_template, request, flash, redirect, url_for,
 
 from app.models import Service
 from app.db import db
+from app.utils.decorators import admin_required
 
 # Create admin services blueprint with URL prefix
 admin_services_bp = Blueprint('admin_services', __name__, url_prefix='/admin/services')
 
 
 @admin_services_bp.route('/')
+@admin_required
 def services_management():
     """Admin services management homepage.
     
@@ -26,6 +28,7 @@ def services_management():
 
 
 @admin_services_bp.route('/new', methods=['GET'])
+@admin_required
 def new_service():
     """Show form for adding a new service.
     
@@ -36,6 +39,7 @@ def new_service():
 
 
 @admin_services_bp.route('/new', methods=['POST'])
+@admin_required
 def create_service():
     """Handle form submission to create a new service.
     
@@ -88,6 +92,7 @@ def create_service():
 
 
 @admin_services_bp.route('/edit/<int:id>', methods=['GET'])
+@admin_required
 def edit_service(id):
     """Show form for editing an existing service.
     
@@ -99,6 +104,7 @@ def edit_service(id):
 
 
 @admin_services_bp.route('/edit/<int:id>', methods=['POST'])
+@admin_required
 def update_service(id):
     """Handle form submission to update an existing service.
     
@@ -150,6 +156,7 @@ def update_service(id):
 
 
 @admin_services_bp.route('/delete/<int:id>', methods=['POST'])
+@admin_required
 def delete_service(id):
     """Handle deletion of an existing service.
     
