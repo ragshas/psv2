@@ -1,0 +1,61 @@
+{% extends "base.html" %}
+
+{% block title %}Shop - PS Framework v2{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/shop.css') }}">
+{% endblock %}
+
+{% block content %}
+<div class="shop-header">
+    <h1>Pet Shop</h1>
+    <p>Everything your pet needs for a happy and healthy life</p>
+</div>
+
+<div class="products-grid">
+    {% for product in products %}
+    <div class="product-card">
+        <div class="product-image">
+            <span class="product-emoji">{{ product.image }}</span>
+        </div>
+        <div class="product-info">
+            <h3 class="product-name">{{ product.name }}</h3>
+            <p class="product-description">{{ product.description }}</p>
+            <div class="product-price">${{ "%.2f"|format(product.price) }}</div>
+            <button class="btn btn-primary add-to-cart" data-product-id="{{ product.id }}">
+                Add to Cart
+            </button>
+        </div>
+    </div>
+    {% endfor %}
+</div>
+
+<div class="shop-footer">
+    <p>More products coming soon! Contact us for special requests.</p>
+</div>
+
+<script>
+// Simple add to cart functionality (placeholder)
+document.addEventListener('DOMContentLoaded', function() {
+    const addToCartButtons = document.querySelectorAll('.add-to-cart');
+    
+    addToCartButtons.forEach(button => {
+        button.addEventListener('click', function() {
+            const productId = this.getAttribute('data-product-id');
+            const productName = this.closest('.product-card').querySelector('.product-name').textContent;
+            
+            // Simple feedback for now
+            this.textContent = 'Added!';
+            this.style.background = '#10b981';
+            
+            setTimeout(() => {
+                this.textContent = 'Add to Cart';
+                this.style.background = '';
+            }, 2000);
+            
+            console.log(`Added product ${productId} (${productName}) to cart`);
+        });
+    });
+});
+</script>
+{% endblock %}

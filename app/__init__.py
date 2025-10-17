@@ -1,5 +1,6 @@
 import os
 from flask import Flask, app
+from flask_login import LoginManager
 from app.db import db
 
 def create_app():
@@ -17,6 +18,22 @@ def create_app():
     # ---- Initialize SQLAlchemy ----
     db.init_app(app)
 
+    # ---- Register custom CLI commands ----
+    from app.cli import register_commands
+    register_commands(app)
+
+    # ---- Initialize Flask-Login ----
+    login_manager = LoginManager()
+    login_manager.init_app(app)
+    login_manager.login_view = 'auth_bp.login'
+    login_manager.login_message = 'Please log in to access this page.'
+    login_manager.login_message_category = 'info'
+
+    @login_manager.user_loader
+    def load_user(user_id):
+        from app.models import User
+        return User.query.get(int(user_id))
+
     # ---- Import Models ----
     from app import models  # Must import models before creating tables
 
@@ -28,6 +45,12 @@ def create_app():
     # ---- Register Blueprints ----
     from app.routes.home import home_bp
     app.register_blueprint(home_bp)
+    from app.routes.auth import auth_bp
+    app.register_blueprint(auth_bp)
+    from app.routes.shop import shop_bp
+    app.register_blueprint(shop_bp)
+    from app.routes.contact import contact_bp
+    app.register_blueprint(contact_bp)
     from app.routes.services import services_bp
     app.register_blueprint(services_bp)
     from app.routes.admin.dashboard import admin_bp
