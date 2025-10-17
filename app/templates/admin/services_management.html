@@ -274,14 +274,14 @@
                             {% if service.description %}
                                 {{ service.description }}
                             {% else %}
-                                <em style="color: var(--muted);">No description</em>
+                                <em class="text-muted">No description</em>
                             {% endif %}
                         </td>
                         <td class="price">
                             {% if service.price %}
                                 ${{ "%.2f"|format(service.price) }}
                             {% else %}
-                                <em style="color: var(--muted);">Contact for pricing</em>
+                                <em class="text-muted">Contact for pricing</em>
                             {% endif %}
                         </td>
                         <td class="actions-col">

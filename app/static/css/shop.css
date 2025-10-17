@@ -89,29 +89,11 @@
     margin-bottom: 1.5rem;
 }
 
+/* Button styles now use theme.css - this provides shop-specific overrides only */
 .add-to-cart {
     width: 100%;
-    padding: 12px 24px;
-    background: linear-gradient(135deg, var(--accent), var(--brand-primary));
-    color: white;
-    border: none;
-    border-radius: 10px;
-    font-weight: 600;
-    cursor: pointer;
-    transition: all 0.3s ease;
     text-transform: uppercase;
     letter-spacing: 0.5px;
-    font-size: 0.9rem;
-}
-
-.add-to-cart:hover {
-    background: linear-gradient(135deg, var(--brand-primary), var(--brand-secondary));
-    transform: translateY(-2px);
-    box-shadow: 0 8px 20px rgba(59, 130, 246, 0.3);
-}
-
-.add-to-cart:active {
-    transform: translateY(0);
 }
 
 /* Shop Footer */
