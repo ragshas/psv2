@@ -3,6 +3,7 @@
 {% block title %}Edit Service - PS Framework v2 Admin{% endblock %}
 
 {% block extra_css %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/admin.css') }}">
 <style>
     .page-header {
         text-align: center;
@@ -98,21 +99,7 @@
         gap: 12px;
         margin-top: 32px;
     }
-    .back-link {
-        display: inline-flex;
-        align-items: center;
-        text-decoration: none;
-        color: var(--muted);
-        margin-bottom: 20px;
-        transition: color 0.2s;
-    }
-    .back-link:hover {
-        color: var(--accent);
-    }
-    .back-link::before {
-        content: "← ";
-        margin-right: 8px;
-    }
+
     @media (prefers-color-scheme: light) {
         .form-container { 
             background: #fff; 

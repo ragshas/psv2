@@ -3,6 +3,7 @@
 {% block title %}Services Management - PS Framework v2 Admin{% endblock %}
 
 {% block extra_css %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/admin.css') }}">
 <style>
     .page-header {
         text-align: center;
@@ -192,24 +193,7 @@
         margin-bottom: 24px;
     }
     
-    .back-link {
-        display: inline-flex;
-        align-items: center;
-        text-decoration: none;
-        color: var(--muted);
-        margin-bottom: 24px;
-        transition: all 0.3s ease;
-        font-weight: 500;
-    }
-    .back-link:hover {
-        color: var(--accent);
-        transform: translateX(-4px);
-    }
-    .back-link::before {
-        content: "← ";
-        margin-right: 8px;
-        font-size: 16px;
-    }
+
     
     @media (prefers-color-scheme: light) {
         .services-table {

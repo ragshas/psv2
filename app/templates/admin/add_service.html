@@ -3,6 +3,7 @@
 {% block title %}Add New Service - PS Framework v2 Admin{% endblock %}
 
 {% block extra_css %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/admin.css') }}">
 <style>
     .page-header {
         text-align: center;
@@ -127,6 +128,8 @@
 {% endblock %}
 
 {% block content %}
+<a href="/admin/services" class="back-link">Back to Services Management</a>
+
 <div class="page-header">
     <h1 class="page-title">Add New Service</h1>
 </div>

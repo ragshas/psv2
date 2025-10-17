@@ -3,6 +3,7 @@
 {% block title %}Bookings & Orders - PS Framework v2 Admin{% endblock %}
 
 {% block extra_css %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/admin.css') }}">
 <style>
     .page-header {
         text-align: center;
@@ -61,6 +62,8 @@
 {% endblock %}
 
 {% block content %}
+<a href="/admin" class="back-link">Back to Admin Dashboard</a>
+
 <div class="page-header">
     <h1 class="page-title">Bookings & Orders</h1>
 </div>
